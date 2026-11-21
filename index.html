@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Capy SIE Prep</title>
+<style>
+:root{--bg:#f3ead9;--card:#fffaf0;--tx:#3b2a1a;--mut:#7a6550;--bd:#e0cfb3;--pri:#8a5a2b;--ok:#2f7d4f;--okbg:#e3f1e0;--bad:#b5452f;--badbg:#fbe6df;--water:#bfe3dc}
+@media(prefers-color-scheme:dark){:root{--bg:#1f1a14;--card:#2a231b;--tx:#f1e6d3;--mut:#b8a68c;--bd:#43372a;--pri:#d9a066;--ok:#7bc99a;--okbg:#1f3626;--bad:#ff9a80;--badbg:#40231c;--water:#1f3a38}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg) linear-gradient(var(--bg) 70%,var(--water)) fixed;color:var(--tx);font:16px/1.5 system-ui,Segoe UI,sans-serif}
+#app{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:8px 0}h2{font-size:17px;margin:0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;box-shadow:0 2px 0 var(--bd);padding:16px;margin:12px 0}
+.row{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.mut{color:var(--mut);font-size:14px}
+button,input[type=text]{font:inherit}
+.btn{background:var(--pri);color:#fff8ec;border:0;border-radius:8px;padding:10px 16px;cursor:pointer}
+.btn.sec{background:transparent;color:var(--pri);border:1px solid var(--bd)}
+.btn.warn{background:var(--bad)}.btn:disabled{opacity:.4;cursor:not-allowed}
+input[type=text]{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx)}
+.chap{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--bd)}
+.chap label{flex:1;cursor:pointer}
+.tag{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--badbg);color:var(--bad);white-space:nowrap}
+.bar{height:10px;background:var(--bd);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pri),#f2a93b);transition:width .3s}
+.capy{vertical-align:middle}.logo{display:flex;align-items:center;gap:8px}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--pri)}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}.opt.no{background:var(--badbg);border-color:var(--bad)}
+.q{font-size:18px;margin:10px 0}
+.exp{margin-top:12px;padding:12px;border-radius:10px;background:var(--bg);border:1px solid var(--bd)}
+a{color:var(--pri);cursor:pointer}
+
+body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cellipse cx='18' cy='19' rx='12' ry='11' fill='%23a77343'/%3E%3Crect x='2' y='15' width='13' height='12' rx='5' fill='%238d5f33'/%3E%3Cellipse cx='5' cy='18' rx='2.5' ry='2' fill='%233a2410'/%3E%3Ccircle cx='17' cy='14' r='1.8' fill='%232a1a0c'/%3E%3Cellipse cx='25' cy='10' rx='3' ry='4' fill='%237d5229'/%3E%3Ccircle cx='19' cy='6' r='5' fill='%23f6a21e'/%3E%3C/svg%3E") 3 19,auto}
+button,a,label,.opt,.btn,input[type=checkbox],[data-sec]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cellipse cx='18' cy='19' rx='12' ry='11' fill='%23a77343'/%3E%3Crect x='2' y='15' width='13' height='12' rx='5' fill='%238d5f33'/%3E%3Cellipse cx='5' cy='18' rx='2.5' ry='2' fill='%233a2410'/%3E%3Ccircle cx='17' cy='14' r='1.8' fill='%232a1a0c'/%3E%3Cellipse cx='25' cy='10' rx='3' ry='4' fill='%237d5229'/%3E%3Ccircle cx='19' cy='6' r='5' fill='%23f6a21e' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E") 3 19,pointer!important}
+input[type=text]{cursor:text}
+#app{position:relative;z-index:1;padding-bottom:170px}
+.fl{position:fixed;bottom:-50px;z-index:0;opacity:.35;pointer-events:none;animation:drift linear infinite;font-size:26px}
+@keyframes drift{to{transform:translateY(-115vh) rotate(25deg)}}
+#buddy{position:fixed;right:10px;bottom:74px;z-index:5;display:flex;flex-direction:column;align-items:flex-end;max-width:230px}
+#buddy svg{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cellipse cx='18' cy='19' rx='12' ry='11' fill='%23a77343'/%3E%3Crect x='2' y='15' width='13' height='12' rx='5' fill='%238d5f33'/%3E%3Cellipse cx='5' cy='18' rx='2.5' ry='2' fill='%233a2410'/%3E%3Ccircle cx='17' cy='14' r='1.8' fill='%232a1a0c'/%3E%3Cellipse cx='25' cy='10' rx='3' ry='4' fill='%237d5229'/%3E%3Ccircle cx='19' cy='6' r='5' fill='%23f6a21e' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E") 3 19,pointer}
+.bub{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:8px 12px;font-size:14px;margin-bottom:4px;box-shadow:0 2px 0 var(--bd);transition:opacity .4s}
+.bub.off{opacity:0}
+#buddy.hop svg{animation:hop .5s}
+@keyframes hop{30%{transform:translateY(-22px)}60%{transform:translateY(0)}80%{transform:translateY(-8px)}}
+.streak{font-weight:600;color:var(--pri)}
+.brew{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--okbg);border:1px solid var(--ok);font-weight:600}
+@media(max-width:560px){#buddy svg{width:64px}#buddy{max-width:170px}}
+@media(prefers-reduced-motion:reduce){.fl{display:none}#buddy.hop svg{animation:none}}
+</style></head><body><div id="app"></div>
+<script>
+const CLEAR=3; // correct-in-a-row needed to clear a missed question
+const SECTIONS=[
+{id:'A',name:'Capital Markets',wt:'16%',ch:[['rp','Regulators & Market Participants'],['ms','Market Structure'],['ec','Economic Factors & the Fed'],['of','Offerings & Underwriting']]},
+{id:'B',name:'Products & Their Risks',wt:'44%',ch:[['eq','Equity Securities'],['db','Debt Securities'],['mu','Municipal Securities'],['pk','Investment Companies & Funds'],['an','Annuities & Municipal Fund Securities (529/ABLE)'],['ot','DPPs, REITs, Hedge Funds & ETPs'],['op','Options'],['rk','Investment Risks']]},
+{id:'C',name:'Trading, Customer Accounts & Prohibited Activities',wt:'31%',ch:[['tr','Orders & Trading'],['ca','Returns, Dividends & Corporate Actions'],['ac','Customer Accounts'],['am','Anti-Money Laundering'],['cs','Best Interest, Suitability & Communications'],['bk','Books, Records & Privacy'],['pr','Prohibited Activities']]},
+{id:'D',name:'Regulatory Framework',wt:'9%',ch:[['rg','Registration, CE & Employee Conduct']]}];
+const CHNAME={};SECTIONS.forEach(s=>s.ch.forEach(c=>CHNAME[c[0]]=c[1]));
+
+const Q=[];
+function q(ch,t,c,w,e){let h=5381;for(const x of t)h=((h<<5)+h+x.charCodeAt(0))|0;Q.push({id:'q'+(h>>>0).toString(36),ch,t,c,w,e});}
+
+// ---- A: Capital Markets
+q('ms','Proceeds from the sale of a new issue in the primary market go to:','The issuer',['The underwriting syndicate','The exchange','The selling group'],'In the primary market the issuer receives the proceeds (less underwriting costs).');
+q('ms','A customer\'s trade in an NYSE-listed stock is executed over the counter by a firm that is not an exchange member. This is the:','Third market',['Primary market','Fourth market','Auction market'],'Third market = exchange-listed securities traded OTC. Fourth market = institutions trading directly with each other (ECNs).');
+q('ms','Institutions trading directly with each other through an ECN, bypassing broker-dealers, is the:','Fourth market',['Third market','Primary market','Secondary auction market'],'Fourth market = institution-to-institution trading without a broker-dealer.');
+q('ms','A dealer acting as principal is compensated by:','A markup or markdown',['A commission','An underwriting spread','A flat advisory fee'],'Dealers (principals) earn markups/markdowns; brokers (agents) earn commissions.');
+q('ms','Nasdaq is best described as:','A dealer (negotiated) market with competing market makers',['A single-specialist auction market','A primary market','A government securities market'],'Nasdaq uses competing market makers; the NYSE is an auction market.');
+q('ec','To fight inflation, the Federal Reserve would most likely:','Raise interest rates / tighten the money supply',['Lower the discount rate','Buy Treasuries in the open market','Lower reserve requirements'],'Tightening reduces money supply and cools inflation. The other choices ease policy.');
+q('ec','The rate banks charge each other for overnight loans of reserves is the:','Federal funds rate',['Discount rate','Prime rate','Broker call rate'],'Fed funds = bank-to-bank. The discount rate is what the Fed charges banks.');
+q('ec','The rate the Federal Reserve charges member banks to borrow is the:','Discount rate',['Federal funds rate','Prime rate','Broker call rate'],'Discount rate = Fed to banks.');
+q('ec','Fiscal policy is set by:','Congress and the President',['The Federal Reserve Board','The FOMC','The SEC'],'Fiscal = government taxing and spending. Monetary = the Fed.');
+q('ec','Which is a LEADING economic indicator?','Building permits',['Prime rate','Unemployment rate','Consumer Price Index'],'Building permits and stock prices lead the economy. Prime rate, unemployment and CPI lag.');
+q('ec','Stagflation is:','High inflation combined with slow growth and high unemployment',['Rapid growth with falling prices','Falling prices and low unemployment','Rising GDP with stable prices'],'Stagflation = inflation + stagnation.');
+q('ec','When the Fed buys government securities in the open market, it is:','Adding reserves and easing the money supply',['Tightening the money supply','Raising the reserve requirement','Draining liquidity from banks'],'Buying securities injects cash into the banking system, which tends to lower rates.');
+q('of','In a firm commitment underwriting, the underwriter:','Buys the issue from the issuer and bears the risk of unsold shares',['Acts only as an agent','Is paid only on shares sold','Can cancel the offering if demand is weak'],'Firm commitment = underwriter acts as principal and takes the risk. Best efforts = agent, no guarantee.');
+q('of','In a best efforts underwriting, the underwriter:','Acts as an agent and does not guarantee the issuer any proceeds',['Buys the entire issue','Guarantees the offering price','Must buy any unsold shares'],'Best efforts = agent only.');
+q('of','The preliminary prospectus ("red herring") does NOT include:','The final public offering price',['Business description','Risk factors','Financial statements'],'Price and effective date info comes in the final prospectus.');
+q('of','During the cooling-off period an underwriter may:','Distribute preliminary prospectuses and gather indications of interest',['Accept firm orders','Confirm sales','Guarantee an offering price'],'No sales or binding orders until the registration is effective.');
+q('of','A private placement under Regulation D is generally sold to:','Accredited investors',['Any retail investor','Only banks','Only foreign investors'],'Reg D exempts offerings sold to accredited investors (with limited exceptions) from registration.');
+q('of','Holding period for restricted stock of a reporting company under Rule 144:','6 months',['90 days','1 year','2 years'],'6 months for reporting issuers, 1 year for non-reporting issuers.');
+q('of','SEC review of a registration statement means:','The SEC has not approved the securities or guaranteed the disclosure is accurate',['The SEC approved the issue as a good investment','The SEC guarantees the issuer\'s solvency','The offering is exempt from fraud rules'],'The SEC only requires disclosure. It never approves or recommends securities.');
+q('of','Rule 144A allows resale of restricted securities to:','Qualified institutional buyers (QIBs)',['Any retail customer','Only the issuer','Only accredited individuals'],'144A = private resales to QIBs.');
+
+// ---- B: Products
+q('eq','Which is NOT a right of common stockholders?','A guaranteed dividend',['Voting for directors','Residual claim on assets in liquidation','Receiving dividends when declared'],'Dividends are declared by the board and never guaranteed on common stock.');
+q('eq','In liquidation, which is paid LAST?','Common stockholders',['Preferred stockholders','Bondholders','General creditors'],'Order: secured/creditors and bondholders, then preferred, then common.');
+q('eq','Cumulative preferred stock means:','Missed dividends accumulate and must be paid before common dividends',['Holders get extra votes','The stock is convertible','Dividends float with rates'],'Unpaid dividends are "dividends in arrears".');
+q('ca','Under T+1 settlement, the ex-dividend date is:','The same day as the record date',['One business day before the record date','Two business days before the record date','The payable date'],'With T+1 settlement, ex-date and record date are the same business day.');
+q('ca','Annual dividend $2.00, stock price $50. Dividend yield?','4%',['2%','2.5%','25%'],'$2 / $50 = 4%.');
+q('ca','An investor with 100 shares at $60 experiences a 2-for-1 split. Afterward:','200 shares at about $30',['200 shares at $60','100 shares at $30','50 shares at $120'],'Share count doubles, price halves, total value is unchanged.');
+q('eq','ADRs are:','Receipts issued by a US bank representing shares of a foreign company',['Foreign bonds sold in the US','Options on foreign stock','Shares issued by the SEC'],'ADRs let US investors trade foreign stocks in dollars.');
+q('eq','Stock the issuer has repurchased is called:','Treasury stock',['Outstanding stock','Authorized stock','Restricted stock'],'Treasury stock gets no vote or dividend. Outstanding = issued minus treasury.');
+q('ca','Who declares a dividend?','The board of directors',['The shareholders','The SEC','The transfer agent'],'Board of directors declares dividends.');
+q('eq','A rights offering gives existing shareholders:','The opportunity to buy new shares before the public (preemptive right)',['Guaranteed dividends','The right to sell stock back to the issuer','Extra votes'],'Preemptive rights protect against dilution.');
+q('db','A 5% $1,000-par bond trades at $800. Current yield?','6.25%',['5%','8%','6.0%'],'$50 annual interest / $800 = 6.25%.');
+q('db','When interest rates rise, existing bond prices:','Fall',['Rise','Stay the same','Double'],'Bond prices and yields move inversely.');
+q('db','For a bond trading at a premium:','Nominal yield > current yield > YTM',['YTM > current yield > nominal yield','Current yield > nominal yield > YTM','All yields are equal'],'Premium bonds: coupon (nominal) is highest, YTM is lowest.');
+q('db','Treasury notes have maturities of:','2 to 10 years',['Up to 1 year','10 to 30 years','Exactly 30 years'],'Bills up to 1 yr; notes 2-10 yrs; bonds over 10 yrs.');
+q('db','Treasury bills are issued:','At a discount and mature at par',['At a premium','With semiannual coupons','At par with a coupon'],'T-bills are zero-coupon, sold at a discount.');
+q('db','A zero-coupon corporate bond holder owes tax annually on:','The accreted discount (phantom income)',['Nothing until maturity','Only the coupons','Only capital gains at sale'],'Annual accretion is taxed as interest even without cash received.');
+q('db','A debenture is backed by:','The issuer\'s general credit',['Specific collateral','Mortgages on property','Treasury securities'],'Debentures are unsecured.');
+q('db','Investment-grade bond ratings are:','BBB/Baa or higher',['BB/Ba or higher','A/A or higher only','B/B or higher'],'Below BBB/Baa is speculative ("junk").');
+q('db','A callable bond is most likely to be called when:','Interest rates fall',['Interest rates rise','The issuer\'s credit worsens','The bond trades at a deep discount'],'Issuers refinance cheaper when rates drop.');
+q('db','On a corporate bond trade, accrued interest is paid by:','The buyer to the seller',['The seller to the buyer','The issuer to the buyer','Nobody'],'Buyer reimburses the seller for interest earned since the last coupon.');
+q('db','A $1,000 convertible bond converts into 20 shares. The conversion price is:','$50',['$20','$100','$1,000'],'$1,000 / 20 = $50.');
+q('db','Which bond has the most interest-rate (price) risk?','Long maturity, low coupon',['Short maturity, high coupon','Short maturity, low coupon','Long maturity, high coupon'],'Longer maturity and lower coupon = longer duration.');
+q('mu','General obligation bonds are backed by:','The issuer\'s taxing power',['Revenue from a specific facility','Federal guarantee','Lease payments only'],'GOs rely on taxes. Revenue bonds rely on the project\'s income.');
+q('mu','Revenue bonds are repaid from:','Revenues of the financed facility',['Property taxes','Federal funds','Income tax'],'Revenue bonds = user fees from the project.');
+q('mu','A muni yields 3%. Investor is in the 30% bracket. Taxable-equivalent yield?','About 4.29%',['2.1%','3.9%','5.0%'],'3% / (1 - 0.30) = 4.29%.');
+q('mu','Municipal bond interest is generally:','Exempt from federal income tax',['Fully taxable','Exempt from capital gains','Taxed only at maturity'],'Capital gains on munis are still taxable.');
+q('pk','Open-end mutual fund shares are redeemed at:','NAV (next calculated price)',['Market price with premium/discount','The offering price less loads','Par value'],'Forward pricing: orders get the next NAV calculated after receipt.');
+q('pk','Fund has $120M assets, $20M liabilities, 5M shares. NAV?','$20',['$24','$4','$25'],'(120 - 20) / 5 = $20.');
+q('pk','Closed-end fund shares trade:','On an exchange at market price, possibly at a premium or discount to NAV',['Only at NAV','Only through the fund company','Continuously created and redeemed'],'Closed-end funds issue a fixed number of shares.');
+q('pk','ETF shares can be bought and sold:','Throughout the trading day on an exchange',['Only at end-of-day NAV','Only from the fund','Only in the primary market'],'ETFs trade like stocks.');
+q('pk','Class B mutual fund shares typically charge:','A back-end sales charge (CDSC) that declines over time',['A front-end load only','No fees','A level load forever'],'Class A = front-end, B = back-end CDSC, C = level load.');
+q('pk','A breakpoint sale violation occurs when a rep:','Sells just below a breakpoint to earn a higher commission',['Recommends a no-load fund','Sells above a breakpoint','Offers Class C shares'],'Customers must be told about breakpoint discounts.');
+q('pk','12b-1 fees are used to pay for:','Distribution and marketing costs',['Portfolio manager bonuses','Custody only','Taxes'],'12b-1 = distribution/shareholder-service costs.');
+q('ot','To keep REIT tax status, a REIT must distribute at least:','90% of taxable income',['50% of taxable income','75% of revenues','100% of earnings'],'REITs pass through at least 90% of taxable income.');
+q('pk','Money market funds seek a stable $1.00 NAV but:','Are not FDIC insured and not guaranteed',['Are FDIC insured','Are guaranteed by the Fed','Can never lose money'],'They are securities, not bank deposits.');
+q('an','In a variable annuity, investment risk is borne by:','The contract owner',['The insurance company','The FDIC','The SEC'],'Fixed annuity = insurer bears risk. Variable = owner bears it (and it is a security).');
+q('an','A fixed annuity is generally:','An insurance product, not a security',['A registered security','Regulated by FINRA only','A mutual fund'],'Variable annuities are securities and need a securities license.');
+q('an','Annuity earnings withdrawn before age 59½ are generally subject to:','Ordinary income tax plus a 10% penalty',['Capital gains tax only','No tax','A 25% fixed tax'],'Earnings are taxed as ordinary income, plus a 10% penalty if early.');
+q('an','The period when a variable annuity owner contributes and builds value is the:','Accumulation phase',['Annuitization phase','Payout phase','Surrender phase'],'Accumulation, then annuitization (payout).');
+q('an','529 plan earnings are tax-free federally when used for:','Qualified education expenses',['Any purpose','Retirement','Home purchase'],'Non-qualified withdrawals: earnings taxed plus 10% penalty.');
+q('ot','Limited partners in a DPP are generally:','Passive investors with liability limited to their investment',['Liable for all partnership debts','Managers of the partnership','Guaranteed a return'],'General partner manages; LPs are passive with limited liability. DPPs are illiquid.');
+q('op','The buyer of a call has the right to:','Buy the underlying at the strike price',['Sell the underlying at the strike price','Receive dividends','Buy only at market price'],'Call = right to buy. Put = right to sell.');
+q('op','Maximum loss for a call buyer is:','The premium paid',['Unlimited','The strike price','Zero'],'Buyers can only lose the premium.');
+q('op','Buy 1 XYZ 50 call at 3. Breakeven?','53',['47','50','56'],'Call breakeven = strike + premium.');
+q('op','Buy 1 XYZ 40 put at 2. Breakeven?','38',['42','40','36'],'Put breakeven = strike - premium.');
+q('op','XYZ trades at 52. The XYZ 45 call has intrinsic value of:','$7 per share',['$0','$5','$52'],'Intrinsic = 52 - 45 = 7 per share ($700 per contract).');
+q('op','The writer of an uncovered call has:','Unlimited potential loss',['Loss limited to premium','No risk','Loss limited to strike'],'Stock price can rise without limit.');
+q('op','A standard equity option contract covers:','100 shares',['10 shares','50 shares','1,000 shares'],'One contract = 100 shares.');
+q('op','An investor owns stock and fears a decline. A protective strategy is to:','Buy a put',['Buy a call','Sell a put','Sell a naked call'],'A protective put sets a floor on the stock\'s value.');
+q('op','A put is in the money when:','Market price is below the strike',['Market price is above the strike','Market equals strike','Premium is high'],'Put intrinsic value = strike - market price.');
+q('op','Who guarantees performance of listed options?','Options Clearing Corporation (OCC)',['The writer\'s broker','The SEC','FINRA'],'OCC is the issuer and guarantor.');
+q('op','Listed equity options expire:','Third Friday of the expiration month (standard monthlies)',['Last day of the month','First Friday','Any Wednesday'],'Standard monthly options expire the third Friday.');
+q('op','The Options Disclosure Document must be given:','At or before account approval for options trading',['After the first trade','Annually only','Never to retail'],'ODD is delivered at or before approval.');
+q('rk','Market (systematic) risk:','Cannot be eliminated through diversification',['Can be eliminated by diversification','Applies only to bonds','Applies only to one company'],'Diversification eliminates unsystematic risk, not market risk.');
+q('rk','Diversification reduces:','Unsystematic (company-specific) risk',['Systematic risk','Inflation risk','Interest-rate risk'],'Spread holdings to reduce company-specific risk.');
+q('rk','Inflation (purchasing power) risk is greatest for:','Fixed-income investments',['Commodities','Real estate','Growth stocks'],'Fixed payments buy less as prices rise.');
+q('rk','Reinvestment risk is the risk that:','Proceeds must be reinvested at lower rates',['The bond defaults','Prices rise','The issuer calls the bond at a premium'],'Common with callable bonds and falling rates.');
+q('rk','Credit (default) risk is highest for:','Low-rated bonds',['US Treasuries','AAA bonds','Money market funds'],'Lower ratings, higher default risk.');
+q('rk','A stock with a beta of 1.5 is expected to be:','More volatile than the market',['Less volatile than the market','Equal to the market','Uncorrelated with the market'],'Beta above 1 = more volatile.');
+q('rk','Liquidity risk is the risk that:','You cannot sell an investment quickly without a significant price concession',['Interest rates will rise','Prices will fall in a recession','Inflation will rise'],'Thinly traded securities carry liquidity risk.');
+
+// ---- C: Trading, accounts, prohibited
+q('tr','A sell stop order is entered:','Below the current market',['Above the current market','At the current market only','At any price'],'It becomes a market order once the stop price is hit.');
+q('tr','A buy limit order will execute:','At the limit price or lower',['At the limit price or higher','Only at market','At any price'],'Buy limit = no more than the limit.');
+q('tr','A market order is executed:','Immediately at the best available price',['Only at a specified price','Only at the close','Only if the stock rises'],'Priority is speed, not price.');
+q('tr','Regular-way settlement for stocks is:','T+1 (one business day)',['T+2','Same day','T+5'],'Equity and most securities settle T+1.');
+q('tr','An investor who sells short expects the price to:','Fall',['Rise','Stay flat','Split'],'Sell borrowed shares high, buy back lower.');
+q('tr','A customer who sells a stock receives the:','Bid price',['Ask price','Midpoint','Last sale'],'Customers sell at the bid and buy at the ask.');
+q('tr','A GTC order remains in effect:','Until executed or canceled',['Until end of day','For 24 hours','Until the next news release'],'Day orders expire at the close.');
+q('tr','Under Reg T, initial margin on stock purchases is:','50%',['25%','30%','100%'],'Fed Reg T sets 50% initial margin. FINRA sets 25% minimum maintenance.');
+q('tr','Customer buys $20,000 of stock on margin. Reg T equity required (initial):','$10,000',['$5,000','$20,000','$2,000'],'50% x $20,000.');
+q('tr','A fill-or-kill order must be:','Executed in full immediately or canceled',['Partially filled','Held open all day','Executed at the close'],'FOK = all immediately or nothing.');
+q('tr','A round lot of stock is typically:','100 shares',['10 shares','500 shares','1,000 shares'],'Round lot = 100 shares.');
+q('bk','A trade confirmation must be sent:','At or before completion of the transaction',['Within 30 days','Quarterly','Annually'],'Confirmations disclose price, capacity, commission and more.');
+q('tr','A market maker quotes:','Both a bid and an ask',['Only a bid','Only an ask','Only the last sale'],'Two-sided quote.');
+q('ac','In a JTWROS account, upon one owner\'s death:','The surviving owner(s) automatically receive the deceased\'s share',['The share goes to the estate','The account is closed','The share goes to the firm'],'Tenants in common = share goes to the estate.');
+q('ac','A UTMA/UGMA custodial account:','Is an irrevocable gift to the minor',['Can be revoked by the donor','Is owned by the custodian','Needs two custodians'],'Minor is the beneficial owner; custodian manages.');
+q('ac','Discretionary trading requires:','Written customer authorization and principal approval',['Verbal authorization','Nothing for experienced customers','SEC approval'],'The firm must accept the account in writing.');
+q('cs','Reg BI requires broker-dealers to:','Act in the best interest of the retail customer when recommending',['Guarantee returns','Recommend only low-cost products','Avoid all conflicts'],'Reg BI sets a best interest standard.');
+q('am','Customer Identification Program (CIP) requires verifying:','Name, date of birth, address and ID number',['Credit score','Net worth only','Employer ID'],'Under USA PATRIOT Act.');
+q('am','Suspicious Activity Reports (SARs) must generally be filed within:','30 days of detection',['5 days','90 days','1 year'],'And the customer must not be told.');
+q('am','Currency Transaction Reports apply to cash transactions over:','$10,000',['$3,000','$5,000','$50,000'],'Structuring to avoid CTRs is illegal.');
+q('rp','SIPC protects customers up to:','$500,000, including $250,000 cash',['$250,000 per security','$100,000','$1,000,000'],'SIPC covers broker-dealer failure, not market losses.');
+q('ac','A trusted contact person is someone the firm may contact about:','Concerns of possible financial exploitation',['Trade ideas','Margin calls only','Tax returns'],'Provided under FINRA Rule 4512.');
+q('ac','After learning a customer died, the firm should:','Cancel open orders and restrict the account',['Continue trading','Close the account','Transfer to the firm'],'Freeze pending proper estate paperwork.');
+q('ac','In a cash account, the customer must:','Pay in full by settlement',['Pay 50% only','Get a margin loan','Pay within 30 days'],'No borrowing in a cash account.');
+q('ac','Hypothecation means:','Pledging customer securities as collateral for a margin loan',['Short selling','Splitting stock','Registering stock'],'Requires a signed hypothecation agreement.');
+q('pr','Trading on material nonpublic information is:','Insider trading',['Front running','Churning','Free riding'],'Illegal and carries heavy penalties.');
+q('pr','Trading ahead of a customer\'s large order for your own benefit is:','Front running',['Churning','Marking the close','Selling away'],'Violation of customer priority.');
+q('pr','Excessive trading to generate commissions is:','Churning',['Front running','Free riding','Wash trading'],'Look for high turnover relative to objectives.');
+q('pr','Buying and selling a security without paying for it is:','Free riding',['Churning','Hypothecation','Pegging'],'Violation of Reg T.');
+q('pr','A rep may NOT:','Guarantee a customer against loss',['Discuss risks','Recommend diversification','Explain fees'],'Guarantees are prohibited.');
+q('rg','Participating in a private securities transaction without telling your firm is:','Selling away',['Churning','Soft dollars','Allowed'],'Requires prior written notice and approval.');
+q('pr','Mixing customer funds with the firm\'s funds is:','Commingling, which is prohibited',['Allowed with disclosure','Allowed with consent','Required for safekeeping'],'Customer assets must be segregated.');
+q('rg','The FINRA gift limit is:','$100 per person per year',['$250','$500','No limit'],'Gifts above $100 to one person per year are not allowed without exceptions.');
+q('pr','Executing a trade without customer authorization is:','Unauthorized trading',['Allowed if profitable','Discretionary trading','A block trade'],'A trade without authorization is prohibited unless there\'s discretion in place.');
+q('pr','Rule 10b-5 prohibits:','Fraud, misstatements and omissions of material facts in securities transactions',['Dealer markups','Short sales','Margin accounts'],'Anti-fraud rule under the 1934 Act.');
+q('rg','Outside business activities by a registered rep require:','Written notice to the firm',['Nothing if unpaid','SEC approval','FINRA fee'],'FINRA Rule 3270.');
+q('pr','The FINRA 5% policy is:','A guideline for reasonableness of markups',['A strict legal cap','A tax rule','A commission floor'],'It\'s a guideline, not a hard rule.');
+q('pr','A rep learns of an unannounced merger and tells a friend who buys shares. This is:','Illegal tipping and insider trading',['Legal if unpaid','Allowed with disclosure','Front running'],'Both tipper and trader are liable.');
+
+// ---- D: Regulatory
+q('rp','The Securities Act of 1933 regulates:','The primary market and new issues',['The secondary market','Mutual funds only','Investment advisers'],'The "paper act" requires disclosure for new issues.');
+q('rp','The Securities Exchange Act of 1934:','Regulates the secondary market and created the SEC',['Regulates only new issues','Created SIPC','Regulates mutual funds'],'Also governs BDs, exchanges and insider trading.');
+q('rp','The Investment Company Act of 1940 regulates:','Mutual funds and other investment companies',['Corporate bonds','Banks','Insurance'],'Investment Advisers Act of 1940 covers advisers.');
+q('rp','SIPC was created by:','The Securities Investor Protection Act of 1970',['The 1933 Act','The Trust Indenture Act','Dodd-Frank'],'SIPC protects against broker-dealer failure.');
+q('rp','The Trust Indenture Act of 1939 requires:','A trust indenture and trustee for qualifying corporate bond issues',['Mutual fund registration','Muni bond insurance','Option registration'],'Applies to corporate debt, not governments.');
+q('rp','FINRA is:','A self-regulatory organization overseen by the SEC',['A government agency','An exchange','A bank regulator'],'FINRA oversees broker-dealers and registered reps.');
+q('rp','The MSRB:','Writes rules for municipal securities dealers but doesn\'t enforce them',['Enforces rules against BDs','Regulates mutual funds','Sets margin rules'],'FINRA and the SEC enforce MSRB rules.');
+q('rp','Initial margin requirements are set by:','The Federal Reserve (Reg T)',['FINRA','SEC','MSRB'],'FINRA sets maintenance requirements.');
+q('rp','State securities regulation is coordinated by:','NASAA',['SIPC','OCC','MSRB'],'Uniform Securities Act and "blue sky" laws.');
+q('rg','Form U4 is used to:','Register an individual with the securities industry',['Terminate registration','Register a firm','Report a complaint'],'U5 terminates; Form BD registers a firm.');
+q('rg','Form U5 must be filed within:','30 days of termination',['5 days','60 days','1 year'],'Firm files it, and gives a copy to the individual.');
+q('rg','The SIE exam result is valid for:','Four years',['One year','Two years','Ten years'],'SIE is valid four years; you can take it without firm sponsorship.');
+q('rg','The Regulatory Element of continuing education must be completed:','Annually',['Every 3 years','Every 5 years','Once'],'Plus the Firm Element annually.');
+q('rp','Sarbanes-Oxley (2002) focuses on:','Corporate accounting controls and executive certifications',['Margin rules','Municipal issuers','Options trading'],'Created PCAOB, requires CEO/CFO certification.');
+q('rg','Which can make someone statutorily disqualified?','A felony conviction within the past 10 years',['A parking ticket','A late tax filing','A civil suit won'],'Disqualified persons can\'t register without special approval.');
+
+// ---- batch 2 (original questions written to the FINRA SIE content outline)
+// Market structure
+q("ms","An investor buys shares of a brand-new IPO from the underwriter. This is a:","Primary market transaction",["Secondary market transaction","Third market transaction","Fourth market transaction"],"New issues sold by the issuer through underwriters are primary market transactions.");
+q("ms","The NYSE operates primarily as an:","Auction market with designated market makers",["Negotiated dealer market","Over-the-counter market","Private placement market"],"Orders meet in a centralized auction, with DMMs maintaining orderly trading.");
+q("ms","A transfer agent is responsible for:","Maintaining shareholder records and issuing/cancelling certificates",["Underwriting new issues","Declaring dividends","Setting stock prices"],"The registrar separately makes sure no more shares than authorized are issued.");
+q("ms","Clearing and settlement of most US securities trades is handled by:","The NSCC/DTCC",["The SEC","FINRA","The Federal Reserve"],"NSCC (part of DTCC) nets and settles trades.");
+q("ms","Liquidity refers to:","How easily an asset can be sold without significantly moving its price",["The asset's credit rating","The asset's dividend yield","The asset's par value"],"Highly liquid = tight spreads and heavy trading volume.");
+q("ms","Securities held in street name are registered in the name of:","The broker-dealer",["The customer","The issuer","The transfer agent"],"The firm is the owner of record and the customer is the beneficial owner.");
+q("ms","A firm that stands ready to buy and sell a security from its own inventory, quoting bid and ask, is a:","Market maker",["Specialist agent","Transfer agent","Investment adviser"],"Market makers provide liquidity by quoting two-sided markets.");
+q("ms","Securities not listed on an exchange trade in the:","Over-the-counter (OTC) market",["Auction market","Primary market","Fourth market only"],"OTC trades are negotiated between dealers.");
+q("ms","A bull market is one in which prices are generally:","Rising",["Falling","Flat","Volatile only"],"Bear market = falling prices.");
+
+// Economics
+q("ec","Gross Domestic Product (GDP) measures:","The total value of goods and services produced in a country in a period",["Consumer price changes","The unemployment rate","The money supply"],"GDP is the broadest measure of economic output.");
+q("ec","A recession is commonly defined as:","Two or more consecutive quarters of declining GDP",["One quarter of rising prices","Any stock market decline","A rise in unemployment only"],"The common rule of thumb is two consecutive negative quarters.");
+q("ec","The Consumer Price Index (CPI) measures:","Changes in prices consumers pay for a basket of goods and services",["Industrial output","Stock prices","Interest rates"],"CPI is the most common inflation gauge.");
+q("ec","Which is expansionary fiscal policy?","Tax cuts and increased government spending",["Raising the discount rate","Selling Treasuries in the open market","Raising reserve requirements"],"Fiscal = Congress/President. The other choices are tightening monetary tools.");
+q("ec","If the Fed raises the reserve requirement, banks:","Have less to lend, which tightens the money supply",["Have more to lend","Can lend at lower rates","Must buy more Treasuries"],"Higher reserves held back = less lending capacity.");
+q("ec","The business cycle phases in order are:","Expansion, peak, contraction, trough",["Peak, expansion, trough, contraction","Trough, peak, expansion, contraction","Contraction, peak, trough, expansion"],"Then the cycle repeats.");
+q("ec","Deflation is:","A general decline in prices",["A general rise in prices","A fall in GDP only","A rise in interest rates"],"The opposite of inflation.");
+q("ec","A weakening US dollar generally benefits:","US exporters",["US importers","Foreign travelers to Europe","Holders of foreign debt owed to the US"],"US goods become cheaper for foreign buyers.");
+q("ec","The FOMC:","Directs open market operations and sets the fed funds target",["Regulates broker-dealers","Sets tax policy","Insures bank deposits"],"The Federal Open Market Committee is the Fed's monetary policy body.");
+
+// Offerings
+q("of","The lead (managing) underwriter:","Organizes the syndicate and runs the book",["Pays the issuer's taxes","Sets the issuer's dividend","Is regulated by the MSRB for corporate deals"],"Also called the book-runner.");
+q("of","The underwriter's spread is:","The difference between the public offering price and the price paid to the issuer",["The bid-ask spread after the offering","The commission paid by the customer","The difference between par and market"],"The spread covers underwriting compensation.");
+q("of","Which security is exempt from SEC registration under the Securities Act of 1933?","US Treasury securities",["Corporate bonds","IPO common stock","Mutual fund shares"],"Government securities (and munis) are exempt from registration, but not from anti-fraud rules.");
+q("of","Shelf registration (Rule 415) allows an issuer to:","Register securities now and sell them over a period of time",["Skip SEC filing","Sell only to institutions","Avoid prospectus delivery forever"],"Up to three years for most issuers.");
+q("of","A green shoe (overallotment) option allows the underwriter to sell up to:","15% additional shares",["5% additional shares","50% additional shares","100% additional shares"],"Used to stabilize the price after an IPO.");
+q("of","A buyer of a new issue must receive the final prospectus:","No later than with the confirmation of sale",["After 90 days","Only on request","Only if they are an institutional investor"],"Delivery is with or before the confirmation.");
+q("of","In a secondary offering, proceeds go to:","The selling shareholders",["The issuer","The underwriter","The SEC"],"No new shares are created, existing shares are sold.");
+q("of","A follow-on (additional public) offering is:","The sale of additional shares by an already public company",["The first sale to the public","A resale of restricted stock","A private placement"],"Follows an IPO.");
+q("of","The main purpose of an underwriting syndicate is to:","Share the underwriting risk and broaden distribution",["Reduce SEC review","Eliminate the prospectus","Guarantee a price increase"],"Several firms share liability and selling.");
+
+// Equity
+q("eq","A convertible preferred stockholder may:","Exchange preferred shares for common at a set ratio",["Demand a refund","Vote as a creditor","Force the board to pay a dividend"],"Convertibles combine income with equity upside.");
+q("ca","A 10% stock dividend:","Gives holders 10% more shares and adjusts the price down proportionally",["Pays 10% cash","Increases the price by 10%","Reduces the number of shares"],"Total value is unchanged, same as a split.");
+q("ca","Qualified dividends are generally taxed at:","Preferential long-term capital gains rates",["Ordinary income rates always","0% always","A flat 50%"],"Holding period requirements apply.");
+q("ca","An investor buys stock for $5,000 and sells it after 18 months for $7,500. The $2,500 gain is:","A long-term capital gain",["A short-term capital gain","Ordinary income","Tax-exempt"],"Held more than one year = long term.");
+q("ca","The cost basis of inherited stock is generally:","Its value on the date of the decedent's death (stepped-up)",["The decedent's original cost","Zero","The value at the time of sale"],"Inherited assets get a step-up in basis.");
+q("ca","The cost basis of gifted stock (for a gain) is generally:","The donor's original cost basis",["Value at the time of the gift","Zero","The value at the donor's death"],"Carryover basis for gifts.");
+q("ca","A wash sale occurs if the investor sells at a loss and buys the same security within:","30 days before or after the sale",["10 days","60 days after only","1 year"],"The loss is disallowed for tax purposes.");
+q("eq","Cumulative voting is most helpful to:","Minority shareholders",["Large shareholders","Bondholders","Preferred holders"],"It lets holders concentrate votes on one director.");
+q("eq","A growth company's stock typically:","Pays little or no dividend and reinvests earnings",["Pays high dividends","Has no risk","Is always preferred stock"],"Income stocks pay out more of their earnings.");
+q("ca","To qualify as a short-term capital gain, the holding period is:","One year or less",["More than one year","More than 6 months","More than 2 years"],"Short-term gains are taxed as ordinary income.");
+
+// Debt
+q("db","A bond with a 6% coupon is issued when market yields are 7%. It will trade:","At a discount",["At a premium","At par","At zero"],"Lower-than-market coupon = priced below par.");
+q("ca","Yield to maturity measures:","The total annualized return if the bond is held to maturity",["Only the coupon rate","Only the current yield","The dividend yield"],"Includes coupon income and gain/loss relative to par.");
+q("db","Serial bonds are bonds where:","Portions of the issue mature in different years",["All mature on one date","They are issued in series with no maturity","They pay no interest"],"Common in municipal issues.");
+q("db","Which is backed by the full faith and credit of the US government?","GNMA (Ginnie Mae) securities",["Fannie Mae securities","Freddie Mac securities","Corporate bonds"],"Fannie and Freddie are GSEs, not explicitly full faith and credit.");
+q("db","The main risk of mortgage-backed securities is:","Prepayment risk",["Currency risk","No interest rate risk","Voting risk"],"Falling rates speed prepayments, rising rates extend maturity.");
+q("db","Treasury STRIPS are:","Zero-coupon securities created from separated principal and interest",["Floating rate notes","Callable bonds","Corporate debt"],"Priced at a discount, interest accretes.");
+q("db","TIPS (Treasury Inflation-Protected Securities) adjust:","The principal based on CPI",["The coupon rate based on stock prices","The maturity date","The credit rating"],"Interest is paid on the adjusted principal.");
+q("db","Commercial paper is:","Unsecured short-term corporate debt, maturing in 270 days or less",["Long-term secured debt","Equity","A municipal note"],"Exempt from registration if maturity is 270 days or less.");
+q("db","A sinking fund provision requires the issuer to:","Set aside money to retire the debt",["Pay dividends","Call the bond immediately","Convert to stock"],"Lowers default risk for bondholders.");
+q("db","The major credit rating agencies include:","Moody's, S&P and Fitch",["FINRA, SEC and MSRB","DTCC, OCC and NSCC","CBOE, NYSE and Nasdaq"],"They rate bond issuers' creditworthiness.");
+
+// Municipal
+q("mu","The legal opinion on a municipal bond's validity and tax status comes from:","Bond counsel",["The underwriter","The rating agency","The SEC"],"Bond counsel's opinion accompanies the issue.");
+q("mu","Industrial development revenue bonds are usually backed by:","The corporation leasing the facility",["Taxes","The state legislature","The federal government"],"Credit depends on the corporate lessee.");
+q("mu","In a competitive municipal bid, the issue is awarded to the syndicate with the:","Lowest net interest cost",["Highest yield","Largest syndicate","Most retail clients"],"Issuer wants the cheapest financing.");
+q("mu","MSRB's EMMA system provides:","Free public access to muni disclosures and trade data",["Tax filing","Stock quotes","Mutual fund NAVs"],"Electronic Municipal Market Access.");
+q("mu","Insured municipal bonds are guaranteed as to:","Timely payment of principal and interest",["Market price","Credit ratings","Tax-exempt status only"],"Insurance protects against issuer default.");
+q("mu","A resident buying an in-state municipal bond usually receives interest that is exempt from:","Federal and state (and often local) income tax",["Federal tax only","State tax only","No taxes"],"Sometimes called triple tax-free.");
+
+// Packaged
+q("pk","A mutual fund's investment adviser is paid:","A management fee from fund assets",["By the customer directly","By the SEC","By the transfer agent"],"Fees are included in the expense ratio.");
+q("pk","A mutual fund's custodian:","Holds the fund's securities and cash",["Sells fund shares","Manages the portfolio","Sets the NAV"],"Usually a bank.");
+q("pk","A letter of intent allows an investor to:","Get a reduced sales charge by committing to invest a certain amount within 13 months",["Avoid taxes","Skip a prospectus","Redeem without charge"],"Backdating up to 90 days is allowed.");
+q("pk","Rights of accumulation give a reduced sales charge based on:","The total value of the investor's holdings in the fund family",["Only the new purchase","Account age","The adviser's fee"],"Cumulative holdings count toward breakpoints.");
+q("pk","An exchange (conversion) privilege lets an investor:","Move between funds in the same family without a new sales charge",["Switch to any fund company","Avoid taxes on the switch","Skip the prospectus"],"The switch is still a taxable event in a taxable account.");
+q("pk","Dollar-cost averaging means:","Investing a fixed dollar amount at regular intervals",["Buying only at lows","Investing a fixed number of shares","Timing the market"],"Average cost per share ends up lower than the average price.");
+q("pk","An index fund seeks to:","Replicate the performance of a market index",["Beat the market through stock picking","Avoid all risk","Hold only bonds"],"Passive management, low expenses.");
+q("pk","To call itself no-load, a fund's 12b-1 fee may not exceed:","0.25% of average net assets",["1%","0.75%","2%"],"FINRA rule on 'no-load' labeling.");
+q("pk","Mutual fund dividends reinvested are:","Taxable in the year paid",["Tax-deferred","Tax-free","Taxed at sale only"],"Reinvestment doesn't defer tax.");
+q("pk","A sector fund is generally riskier than a diversified fund because of:","Concentration in one industry",["Higher loads","Higher NAV","Lower liquidity only"],"Less diversification.");
+
+// Annuities & other
+q("an","The annuitant is:","The person whose life expectancy determines payments",["The insurance company","The beneficiary","The broker"],"The owner and annuitant may or may not be the same person.");
+q("an","A straight life annuity pays:","Income for the annuitant's life with nothing to heirs after death",["Income for a fixed period only","A lump sum","Income to heirs only"],"Highest monthly payment, no refund.");
+q("an","A surrender charge applies when:","The owner withdraws too much too early",["The owner is over 59½","The annuity is annuitized","The owner dies"],"Typically declining over several years.");
+q("an","On withdrawals from a non-qualified annuity, which comes out first for tax purposes?","Earnings (LIFO)",["Contributions","Equal parts of both","Principal only"],"Earnings are taxed as ordinary income first.");
+q("an","The Coverdell ESA's annual contribution limit per beneficiary is:","$2,000",["$20,000","$500","$6,000"],"Not indexed to inflation.");
+q("ac","Qualified Roth IRA distributions are:","Tax-free",["Taxed as ordinary income","Taxed as capital gains","Fully deductible"],"Contributions are after-tax.");
+q("ac","Traditional IRA withdrawals in retirement are generally:","Taxed as ordinary income",["Tax-free","Capital gains","Not allowed before 70"],"Contributions may be deductible.");
+q("an","The mortality and expense charge in a variable annuity covers:","The insurer's guarantees and costs",["Management of subaccounts","The sales load","Taxes"],"Reduces net returns.");
+q("an","A variable annuity's separate account holds:","Subaccounts invested in securities, kept apart from the insurer's general account",["Only bonds","Only cash","The insurer's other assets"],"The owner bears the investment risk.");
+
+// Options
+q("op","Buy 1 XYZ 40 put at 3. Maximum gain?","$3,700",["$300","Unlimited","$4,300"],"Stock to zero: (40 - 3) x 100 = $3,700.");
+q("op","The writer of a put is obligated to:","Buy the stock at the strike if assigned",["Sell the stock at the strike","Receive dividends","Pay the premium"],"Put writers are bullish or neutral.");
+q("op","American-style options can be exercised:","Any time up to expiration",["Only at expiration","Only on the third Friday","Never"],"European style = only at expiration.");
+q("op","Index options are generally:","Cash settled",["Settled by delivering stock","Settled by delivering the index","Not exercisable"],"No physical delivery is possible.");
+q("op","A call is out of the money when:","The stock price is below the strike",["The stock price is above the strike","The stock equals the strike","The premium is zero"],"No intrinsic value.");
+q("op","An option writer who is assigned on a short call must:","Deliver the stock at the strike price",["Buy the stock at the strike","Pay a penalty","Do nothing"],"A call writer delivers; a put writer buys.");
+
+// Risks
+q("rk","Currency (exchange rate) risk affects:","Investments denominated in foreign currencies",["Only domestic bonds","Only Treasury bills","Only money market funds"],"A falling foreign currency reduces dollar value.");
+q("rk","Prepayment risk is most associated with:","Mortgage-backed securities",["Treasury bills","Common stock","Zero-coupon bonds"],"Homeowners refinance when rates fall.");
+q("rk","Call risk is the risk that:","The issuer redeems a bond early, usually when rates have fallen",["The bond defaults","Inflation rises","The bond is downgraded"],"Investors reinvest at lower rates.");
+q("rk","Standard deviation measures an investment's:","Volatility",["Dividend yield","Liquidity","Credit rating"],"Higher standard deviation = more variability.");
+q("rk","The biggest driver of a diversified portfolio's long-term return variability is generally:","Asset allocation",["Security selection","Market timing","Trading costs"],"The mix of stocks, bonds, and cash.");
+q("rk","An investor with a long time horizon can generally:","Tolerate more short-term volatility",["Take no risk","Only hold cash","Avoid diversification"],"More time to recover from downturns.");
+q("rk","Political/regulatory risk is greatest for:","Investments in foreign or heavily regulated industries",["US Treasuries only","Cash","Insured CDs"],"Policy changes can hurt returns.");
+q("rk","Business risk is the risk that:","A company's operations underperform",["Interest rates change","Currency changes","Inflation rises"],"Affects the issuer's earnings and stock.");
+
+// Trading
+q("tr","A stop-limit order becomes:","A limit order when the stop price is reached",["A market order when the stop is reached","A day order","A fill-or-kill order"],"No guarantee of execution.");
+q("tr","An immediate-or-cancel (IOC) order:","Fills all or part immediately and cancels the rest",["Must fill completely or cancel","Stays open all day","Fills only at the close"],"Unlike FOK, partial fills are okay.");
+q("tr","An all-or-none (AON) order:","Must be filled in full, but not necessarily immediately",["Must be filled immediately","Can be partially filled","Executes at the close"],"AON can wait. FOK cannot.");
+q("tr","The bid-ask spread is:","The difference between the ask and the bid",["The commission","The markup","The difference between open and close"],"Narrow spreads signal liquid markets.");
+q("tr","An odd lot is:","Fewer than 100 shares",["Exactly 100 shares","More than 1,000 shares","An institutional order"],"Round lot = 100 shares.");
+q("tr","A cash trade settles:","The same day",["T+1","T+2","T+5"],"Cash settlement = same day.");
+
+// Accounts
+q("cs","Form CRS (Customer Relationship Summary) is:","A short disclosure of services, fees and conflicts given to retail investors",["A tax form","A margin agreement","A trade confirmation"],"Part of the Reg BI package.");
+q("cs","Quantitative suitability relates to:","The number/frequency of recommended transactions",["Customer age","The firm's capital","Stock splits"],"Excessive trading is a concern.");
+q("cs","A retiree needing current income and safety of principal is best suited to:","High-quality bonds and Treasuries",["Penny stocks","Aggressive growth funds","Speculative options"],"Match the recommendation to the objective.");
+q("ac","To open a corporate account, a firm typically needs:","A corporate resolution and authorized signers",["The CEO's tax return","A personal guarantee only","Nothing"],"Verifies who may trade for the corporation.");
+q("ac","ACATS is used to:","Transfer accounts between firms",["Report suspicious activity","Clear options","Register securities"],"The Automated Customer Account Transfer Service.");
+q("rg","A written customer complaint must be retained for:","At least 4 years",["1 year","10 years","Not required"],"FINRA Rule 4513.");
+q("bk","Customers must receive account statements at least:","Quarterly (monthly if there is activity)",["Annually","Monthly always","Only on request"],"Required by FINRA/SEC rules.");
+q("ac","In a trust account, the trustee's trading authority comes from:","The trust document",["The broker","FINRA","The beneficiary"],"The firm must review the trust document.");
+q("bk","Reg S-P deals with:","Privacy and safeguarding of customer financial information",["Short sales","Margin","Options"],"Firms give privacy notices.");
+
+// Prohibited
+q("pr","Recommending a mutual fund just before its dividend distribution to make the dividend an attractive feature is called:","Selling dividends",["Breakpoint selling","Churning","Free riding"],"Prohibited because the dividend reduces NAV by the same amount.");
+q("pr","Marking the close is:","Placing trades near the close to influence the closing price",["Reporting trades late","Late confirmations","A margin call"],"A form of manipulation.");
+q("pr","A wash trade is:","A trade with no real change in beneficial ownership, creating false activity",["A tax-loss sale","A margin sale","A block trade"],"Prohibited manipulation.");
+q("cs","Telemarketing calls to customers are generally allowed only between:","8 a.m. and 9 p.m. in the called person's local time",["6 a.m. and 6 p.m.","9 a.m. and 5 p.m.","Any time"],"Also must honor do-not-call lists.");
+q("pr","FINRA Rule 5130 restricts the sale of new equity IPOs to:","Restricted persons such as broker-dealer employees (with exceptions)",["Retail investors","Institutions","Anyone"],"Prevents insiders from capturing hot issues.");
+q("pr","A rep may share in the profits and losses of a customer's account only if:","The firm and the customer approve in writing, proportional to the rep's contribution",["The customer verbally agrees","The rep is the only owner","The rep never loses"],"Strict conditions apply.");
+q("pr","Hyping a thinly traded stock and then selling it at inflated prices is:","A pump and dump",["Arbitrage","A block trade","Wash sale"],"Fraudulent manipulation.");
+q("rg","A rep who settles a customer complaint privately without telling the firm:","Is violating firm and FINRA rules",["Is acting properly","Needs no approval","Is exempt for small amounts"],"Complaints must be reported to the firm.");
+q("cs","A retail communication is one distributed to:","More than 25 retail investors within a 30-day period",["Any one customer","Only institutions","Only accredited investors"],"Retail communications require principal approval.");
+
+// Regulatory
+q("rp","Securities industry disputes between customers and member firms are generally resolved through:","FINRA arbitration",["Federal court first","Congress","The SEC commissioners"],"Pre-dispute arbitration agreements are common.");
+q("rp","A Form 10-K is:","An issuer's annual report",["A quarterly report","A report of material events","A broker registration form"],"10-Q = quarterly. 8-K = material events.");
+q("rp","A Form 8-K reports:","Material corporate events",["Annual results","Quarterly results","Mutual fund holdings"],"Filed soon after major events (merger, CEO departure).");
+q("rp","Form ADV is used to register:","Investment advisers",["Broker-dealers","Individual reps","Exchanges"],"Form BD registers broker-dealers, U4 registers individuals.");
+q("rp","A broker-dealer registers with the SEC using:","Form BD",["Form U4","Form U5","Form ADV"],"And must join FINRA.");
+q("rg","After passing the SIE, an individual who wants to sell securities must also:","Pass a representative-level qualification exam such as the Series 7",["Do nothing more","Pass another SIE","Only pay a fee"],"The SIE is a corequisite, not enough alone.");
+q("rp","The SEC is run by:","Five commissioners appointed by the President, no more than three from one party",["Seven elected commissioners","FINRA's board","Congress directly"],"Confirmed by the Senate.");
+q("rp","The Insider Trading and Securities Fraud Enforcement Act of 1988:","Increased penalties for insider trading and made control persons liable",["Created the SEC","Created SIPC","Created FINRA"],"Civil penalties up to three times the profit gained or loss avoided.");
+
+// ---- batch 3: gap-fill against FINRA SIE content outline
+// 1.1 Regulators & participants
+q("rp","The FDIC insures:","Deposits at insured banks, such as checking, savings and CDs",["Brokerage account securities","Mutual fund shares","Variable annuities"],"FDIC covers bank deposits. SIPC covers customer assets if a broker-dealer fails. Neither covers market losses.");
+q("rp","An introducing broker-dealer typically:","Takes customer orders and uses a clearing firm to settle trades and hold assets",["Clears all its own trades","Only trades for its own account","Acts only as an underwriter"],"Clearing firms handle settlement, custody and statements for introducing firms.");
+q("rp","A prime broker provides services mainly to:","Large institutional clients such as hedge funds",["Retail customers","Municipal issuers","Individual retirement accounts"],"Services include financing, custody and securities lending.");
+q("rp","A municipal advisor:","Advises state and local governments on issuing municipal securities",["Underwrites corporate IPOs","Manages mutual funds","Clears options trades"],"Municipal advisors are registered with the SEC and regulated by the MSRB.");
+q("rp","Under SEC rules, an individual may be an accredited investor with a net worth over:","$1 million, not counting the primary residence",["$250,000","$500,000 including the home","$5 million"],"Alternatively, income over $200,000 ($300,000 joint) in each of the last two years.");
+q("rp","An investment adviser is generally:","Paid to give advice about securities and regulated under the Investment Advisers Act of 1940",["A broker who executes trades","A mutual fund custodian","An exchange member"],"Advisers earn fees for advice, and broker-dealers earn commissions or markups.");
+q("rp","The SEC's mission includes:","Protecting investors, maintaining fair markets and facilitating capital formation",["Setting interest rates","Insuring bank deposits","Underwriting new issues"],"The SEC is the federal securities regulator.");
+q("rp","A custodian is a party that:","Holds and safeguards assets for an owner",["Issues new securities","Sets dividends","Underwrites an offering"],"Banks and trust companies often act as custodians.");
+q("rp","Which is an institutional investor?","A pension fund",["A person buying 100 shares","A college student","A person with a Roth IRA"],"Institutions include banks, insurers, mutual funds and pension funds.");
+q("rp","The CBOE is:","An options exchange and a self-regulatory organization",["A federal agency","A rating agency","A clearing bank"],"SROs include FINRA, the MSRB and exchanges such as CBOE.");
+
+// 1.3 Economics
+q("ec","The balance of payments records:","A country's transactions with the rest of the world",["Domestic prices","Federal tax receipts","Corporate earnings"],"It includes trade in goods, services and capital flows.");
+q("ec","GNP differs from GDP because GNP measures:","Output produced by a country's residents anywhere in the world",["Only government spending","Output within borders by anyone","Only exports"],"GDP is production inside a country's borders.");
+q("ec","If the euro strengthens against the dollar, a US investor's European stock holdings are, all else equal:","Worth more in dollars",["Worth less in dollars","Unchanged in dollars","Worthless"],"Foreign currency gains raise the dollar value of foreign investments.");
+q("ec","The balance sheet equation is:","Assets = liabilities + shareholders' equity",["Revenue = expenses + profit","Assets = revenue - expenses","Equity = assets + liabilities"],"The balance sheet is a snapshot at one date.");
+q("ec","An income statement shows:","Revenues, expenses and net income over a period",["Assets and liabilities at a date","Cash held by the firm","Debt maturities"],"It reports performance over time.");
+q("ec","Keynesian economics emphasizes:","Government spending and fiscal policy to manage demand",["Controlling the money supply above all","No government role","Gold standards"],"Monetarists focus on the money supply.");
+q("ec","Monetarists believe the economy is best managed by:","Controlling the growth of the money supply",["Government spending","Tax cuts only","Price controls"],"Associated with Milton Friedman.");
+q("ec","A defensive stock is one whose demand:","Stays relatively stable during downturns",["Surges in recessions","Rises only in booms","Is tied to commodity prices"],"Utilities and consumer staples are common examples. Cyclicals, such as autos, swing with the economy.");
+q("ec","Which is a coincident economic indicator?","Industrial production",["Building permits","Prime rate","Stock market index"],"Coincident indicators move with the economy.");
+
+// 1.4 Offerings
+q("of","Blue-sky laws are:","State laws regulating the sale of securities",["Federal laws on mutual funds","Exchange listing standards","IRS tax rules"],"State registration is administered by state regulators (NASAA coordinates).");
+q("of","A municipal offering's disclosure document, comparable to a prospectus, is called the:","Official statement",["Red herring only","Form 10-K","Proxy statement"],"Official statements are available on EMMA.");
+q("of","A tombstone ad:","Announces an offering with basic information and is not an offer to sell",["Is a sales presentation","Contains financial statements","Is a final prospectus"],"It lists the issuer, security, price and underwriters.");
+q("of","A Rule 147 intrastate offering is limited to:","Residents of a single state",["Accredited investors nationwide","Foreign investors","Institutions only"],"Exempt from federal registration if conditions are met.");
+
+// 2.1.1 Equities
+q("eq","A warrant is:","A long-term right to buy stock at a set price, often attached to a bond or preferred issue",["A short-term right issued to existing holders","A type of bond","A mutual fund share"],"Rights are short-lived (weeks). Warrants last years.");
+q("eq","Stock rights are typically:","Short-term and issued to existing shareholders at a price below market",["Long-term and issued to the public","Free dividends","Debt securities"],"Rights protect against dilution.");
+q("eq","Limited liability for stockholders means:","They can lose no more than their investment",["They are never taxed","They can lose more than invested","They can't vote"],"Creditors can't go after stockholders' personal assets.");
+q("eq","Control (affiliate) stock is held by:","Directors, officers and large (10%+) holders",["Any retail investor","Only mutual funds","The SEC"],"Affiliates face volume and filing limits when selling under Rule 144.");
+q("eq","Preferred stock prices tend to move:","Inversely with interest rates",["With interest rates","Independent of rates","With GDP only"],"Like bonds, fixed dividends become less attractive when rates rise.");
+
+// 2.1.2 Debt
+q("db","A banker's acceptance is:","A short-term draft guaranteed by a bank, often used in international trade",["A long-term bond","A stock","A mutual fund"],"A money market instrument.");
+q("db","Negotiable CDs of large denominations are:","Money market instruments tradable in the secondary market",["Stock","Not tradable","Backed by SIPC"],"Bank CDs are FDIC insured up to limits.");
+q("db","In a Treasury auction, noncompetitive bidders:","Accept the yield determined by the auction and are filled",["Name their own yield","Are not allowed","Pay more"],"Competitive bidders specify the yield they want.");
+q("db","Asset-backed securities are backed by:","Pools of receivables such as auto loans or credit card debt",["Gold","Stock dividends","Municipal taxes"],"Mortgage-backed securities are a type of asset-backed security.");
+q("db","A bond quoted at 98 is priced at:","$980 per $1,000 of par",["$98","$9,800","$1,098"],"Bonds are quoted as a percentage of par.");
+q("db","A bond's par value is:","The amount repaid at maturity, usually $1,000",["The current market price","The coupon payment","The yield"],"Coupon = stated interest rate on par.");
+
+// Municipals
+q("mu","Taxable municipal bonds:","Exist and pay interest subject to federal income tax",["Don't exist","Are always GOs","Are only issued by the federal government"],"Some projects don't qualify for tax exemption.");
+q("mu","Short-term municipal obligations (notes) generally mature in:","Less than one year (typically)",["10 years","30 years","Never"],"Examples are BANs, TANs and RANs.");
+
+// Funds
+q("pk","A unit investment trust (UIT):","Holds a fixed portfolio, has a termination date and is not actively managed",["Has a changing portfolio","Trades only on exchanges","Is managed daily"],"Units are redeemable.");
+
+// Annuity / municipal fund securities
+q("an","A 529 plan account owner:","Controls the account and can change the beneficiary to a qualifying family member",["Is always the beneficiary","Can't withdraw","Is the state"],"Owner and beneficiary are distinct roles.");
+q("an","Contributions to a 529 plan are:","Made with after-tax dollars (no federal deduction)",["Federally deductible","Matched by the government","Capped at $2,000"],"Earnings grow tax-deferred and are tax-free for qualified expenses.");
+q("an","ABLE accounts are:","Tax-advantaged savings accounts for individuals with disabilities",["Retirement accounts","College plans","Hedge funds"],"Municipal fund securities.");
+q("an","A local government investment pool (LGIP):","Pools money from local governments for short-term investment",["Is a corporate bond","Is an annuity","Is a stock fund"],"It is a type of municipal fund security.");
+
+// DPPs, REITs, HF, ETPs
+q("ot","DPP investors generally receive:","Pass-through tax treatment of income and losses",["Guaranteed income","Daily liquidity","Insurance protection"],"Limited partnerships pass results to partners.");
+q("ot","Tenants in common (TIC) real estate owners:","Hold undivided interests in the property",["Own separate buildings","Own bonds","Have no rights"],"Each may transfer or will their share.");
+q("ot","A non-listed REIT is generally:","Illiquid because it does not trade on an exchange",["Highly liquid","Guaranteed","Tax-exempt on the investor"],"Listed REITs trade on exchanges.");
+q("ot","REITs avoid double taxation primarily by:","Distributing most income to shareholders",["Paying no dividends","Being nonprofits","Investing only in bonds"],"The REIT is not taxed on distributed income.");
+q("ot","Hedge funds are typically:","Private pooled investments with high minimums, limited liquidity and sold to sophisticated investors",["Registered mutual funds sold to everyone","Insured deposits","Treasury securities"],"Often structured as limited partnerships.");
+q("ot","An exchange-traded note (ETN) is:","An unsecured debt obligation of the issuer, carrying issuer credit risk",["A fund holding real stocks","FDIC insured","A mutual fund"],"ETNs track an index but are debt.");
+q("ot","Compared with mutual funds, ETFs:","Trade throughout the day on an exchange",["Trade only at NAV once daily","Can't track an index","Have no fees"],"Both active and passive ETFs exist.");
+
+// Options
+q("op","Which position is bullish?","Long call",["Long put","Short call","Short stock"],"Short put is also bullish.");
+q("op","A call written without owning the underlying stock is:","Uncovered (naked)",["Covered","Protective","Married"],"Unlimited risk.");
+q("op","A covered call writer:","Owns the underlying stock",["Owns a put","Has no position","Is bearish only"],"Limits risk but caps upside.");
+q("op","An option buyer who lets an out-of-the-money option expire:","Loses the premium paid",["Loses unlimited amounts","Gains the strike","Owes the writer"],"Buyer's maximum loss is the premium.");
+q("op","The premium is:","The price paid by the buyer to the writer",["The strike","The exercise price","The commission"],"Strike = price at which the underlying can be bought or sold.");
+q("op","An investor owning stock buys a put to:","Hedge against a price decline",["Speculate on a rise","Collect premium","Lock in a dividend"],"Hedging reduces risk. Speculating seeks profit from price movement.");
+
+// Risks
+q("rk","Capital risk is the risk of:","Losing some or all of the principal invested",["Rates rising","Currency changes only","Tax increases"],"Applies to all non-guaranteed investments.");
+q("rk","Portfolio rebalancing means:","Adjusting holdings back to target allocations",["Selling everything","Buying only bonds","Eliminating diversification"],"Controls risk drift.");
+q("rk","Hedging is:","Taking an offsetting position to reduce risk",["Increasing leverage","Day trading","Buying penny stocks"],"E.g., buying puts against stock held.");
+
+// Trading
+q("tr","In a non-discretionary account, the customer:","Makes the investment decision for each trade",["Lets the rep choose","Cannot trade","Needs no approval"],"Discretionary accounts require written authority.");
+q("tr","A trade the customer initiates without a recommendation from the rep is:","Unsolicited",["Solicited","Discretionary","Prohibited"],"Solicited = the rep recommended it.");
+q("tr","When a firm sells to a customer from its own inventory, it acts as:","Principal",["Agent","Underwriter only","Custodian"],"Principals earn markups. Agents earn commissions.");
+q("tr","A short seller is:","Bearish",["Bullish","Neutral","Hedged against inflation"],"Profits when the price falls.");
+q("tr","An investor who owns shares has a:","Long position",["Short position","Naked position","Margin position"],"Bullish expectations.");
+q("tr","Most securities today settle:","By book entry with no physical certificates",["By mailed certificates","By courier only","By cash only"],"Electronic records at DTC.");
+q("tr","An investor who is bullish expects prices to:","Rise",["Fall","Stay the same","Split"],"Bearish expects declines.");
+
+// Returns & corporate actions
+q("ca","A 1-for-4 reverse split of 100 shares at $10 leaves the holder with:","25 shares at about $40",["400 shares at $2.50","100 shares at $10","25 shares at $10"],"Reverse splits reduce shares and raise price proportionally.");
+q("ca","A tender offer is:","An offer to buy shareholders' shares at a stated price for a limited time",["A dividend","A stock split","A proxy"],"Often used in takeovers.");
+q("ca","A company's stock buyback generally:","Reduces shares outstanding",["Increases shares outstanding","Creates new stock","Pays a dividend"],"Repurchased shares become treasury stock.");
+q("ca","A proxy:","Authorizes someone to vote a shareholder's shares at a meeting",["Is a dividend","Is a tax form","Pays interest"],"Proxy materials are forwarded to street-name holders.");
+q("ca","A basis point is:","1/100 of one percent",["1%","10%","1/10 of 1%"],"100 basis points = 1%.");
+q("ca","Total return includes:","Income plus capital appreciation",["Only dividends","Only price change","Only coupons"],"Reinvested distributions count too.");
+q("ca","To receive a dividend, you must be:","The owner of record on the record date",["The owner on the payable date","A bondholder","The board's guest"],"The payable date is the date the dividend is actually paid.");
+q("ca","After a 2-for-1 split, an investor's per-share cost basis:","Is cut in half",["Doubles","Stays the same","Becomes zero"],"Total basis is unchanged.");
+q("ca","The S&P 500 is commonly used as:","A benchmark for large-cap US stocks",["A bond index","A money market fund","A commodity index"],"Benchmarks measure performance.");
+
+// Accounts
+q("ac","In a fee-based account, the customer pays:","A fee based on assets rather than commission per trade",["Only commissions","No fee","A fee only on losses"],"Fee-based = asset-based advisory fee.");
+q("ac","Before a customer opens a margin account, the firm must provide:","A margin disclosure statement",["A prospectus","A privacy waiver","A tax opinion"],"Rule 2264 warns losses can exceed the deposit.");
+q("ac","An options account requires:","Principal approval and delivery of the Options Disclosure Document",["No paperwork","SEC approval","A margin account"],"ODD is delivered at or before approval.");
+q("ac","Roth IRA owners are:","Not required to take distributions during their lifetime",["Always required to take RMDs","Taxed on every contribution","Barred from withdrawing"],"Traditional IRAs have RMDs.");
+q("ac","A partnership account requires:","The partnership agreement identifying who may trade",["Nothing","SEC approval","One partner's SSN only"],"The firm verifies authority.");
+q("ac","In a revocable trust, the grantor:","Can change or cancel the trust",["Cannot change it","Is the beneficiary only","Is deceased"],"Irrevocable trusts can't be changed easily.");
+q("ac","An educational savings vehicle whose owner and beneficiary are distinct is a:","529 plan",["Margin account","Joint account","Cash account"],"Owner controls; beneficiary uses funds.");
+
+// AML
+q("am","The three stages of money laundering are:","Placement, layering and integration",["Structuring, selling and holding","Filing, reporting and clearing","Buying, selling and swapping"],"Dirty money is placed, layered to obscure its origin, then integrated.");
+q("am","Structuring is:","Breaking up cash deposits to avoid reporting requirements",["Underwriting","Hedging","Clearing"],"It is illegal even if the money is clean.");
+q("am","FinCEN is:","The Treasury bureau that collects AML reports like SARs and CTRs",["A stock exchange","A rating agency","A clearing firm"],"Financial Crimes Enforcement Network.");
+q("am","OFAC administers:","Economic sanctions, including the SDN list",["Margin rules","Tax filings","Exchange listings"],"Firms must not deal with SDNs and must block assets.");
+q("am","A firm's AML program must include:","A designated AML compliance officer and ongoing employee training",["Only a policy statement","No testing","Only customer ID"],"Also written policies and independent testing.");
+q("am","After a SAR is filed, the firm:","Must not tell the customer",["Must notify the customer","Must close the account","May discuss it freely"],"Tipping off is prohibited.");
+q("am","Under Section 352 of the USA PATRIOT Act, firms must:","Establish an AML program",["Eliminate cash","Stop trading","Register with FinCEN as exchanges"],"Rule 3310 implements it for FINRA members.");
+
+// Best interest, suitability, communications
+q("cs","Correspondence is written communication distributed to:","25 or fewer retail investors within a 30-day period",["More than 25 retail investors","Only institutions","Only the public via TV"],"Retail communication is 25+ retail investors.");
+q("cs","An institutional communication is distributed only to:","Institutional investors",["Any customer","Retail investors","The SEC"],"No retail recipients.");
+q("cs","A caller may contact someone on the Do-Not-Call Registry if:","There's an established business relationship",["The caller is a stranger","It's before 8 a.m.","The caller is angry"],"Firms also keep an internal do-not-call list.");
+q("cs","A recommendation is:","A call to action that would reasonably influence an investor to trade",["Any general market commentary","A price quote","A confirmation"],"Facts and circumstances determine it.");
+q("cs","Know-your-customer (Rule 2090) requires firms to:","Use reasonable diligence to know the essential facts about each customer",["Verify income yearly","Avoid risky customers","Obtain SEC approval"],"Applies at account opening and throughout.");
+q("cs","Under Reg BI, a retail customer is:","A natural person using a recommendation primarily for personal, family or household purposes",["Any institution","A corporation","A bank"],"Reg BI applies to recommendations to retail customers.");
+q("cs","A customer profile typically includes:","Investment objectives, risk tolerance and time horizon",["Only name and address","Credit card number","Stock tips"],"Used to make recommendations in the customer's best interest.");
+
+// Books, records, privacy
+q("bk","Before holding a customer's mail, the firm needs:","Written instructions from the customer",["Nothing","An SEC order","A FINRA fee"],"Rule 3150 limits holding periods.");
+q("bk","A business continuity plan must address:","How the firm will continue operating during a disruption",["Tax filing","Only fire drills","Marketing"],"FINRA Rule 4370.");
+q("bk","The customer account record must be preserved for at least:","6 years after the account is closed",["1 year","3 months","10 years"],"Many other records need 3 years.");
+q("bk","Nonpublic personal information may be shared with nonaffiliated third parties only if:","The customer was given a chance to opt out (with exceptions)",["The firm wants to","The SEC asks","The customer dies"],"Reg S-P privacy rules.");
+q("bk","The customer protection rule requires firms to:","Safeguard customers' fully paid securities and cash",["Lend customer assets freely","Hold only firm money","Close accounts quarterly"],"Customer assets must be segregated.");
+
+// Prohibited activities
+q("pr","Backing away is:","Failing to honor a firm quotation",["Delaying a trade confirmation","Cancelling an order for the customer","Marking the close"],"Firms must honor their quotes.");
+q("pr","A rep borrowing money from a customer is generally:","Prohibited unless firm procedures allow it and the firm approves",["Always allowed","Allowed if friendly","Allowed if repaid quickly"],"Exceptions include family members and lending institutions.");
+q("pr","FINRA Rule 2165 allows a firm to:","Place a temporary hold on disbursements if senior financial exploitation is suspected",["Close the account","Refuse all trades","Disclose to the press"],"Protects seniors and specified adults.");
+q("pr","A firm may not pay transaction-based compensation to:","Unregistered persons",["Registered representatives","Principals","Traders"],"Rule 2040.");
+q("pr","Signing a customer's name on a form, even with permission, is:","Prohibited (a signature of convenience)",["Acceptable","Required","Only a problem for large amounts"],"Forgery risk.");
+q("pr","A registered rep who fails to respond to a FINRA request for information:","May be suspended or barred",["Has no consequences","Is fined $1","Gets a warning only"],"Responding to regulators is mandatory.");
+q("pr","Spreading false market rumors to move a stock's price is:","Market manipulation",["Permitted research","A tender offer","Hedging"],"Prohibited under anti-fraud rules.");
+q("pr","Insider trading violations may result in:","Fines, expulsion and imprisonment",["Only a warning","Only a refund","No penalty"],"Also civil penalties and disgorgement.");
+q("pr","Which is most likely material nonpublic information?","An unannounced merger",["A published earnings report","A newspaper rating upgrade","A rumor on social media"],"Material info would affect a reasonable investor's decision.");
+
+// Registration, CE, conduct
+q("rg","Securities industry personnel must be:","Fingerprinted",["Photographed only","Exempt from background checks","Interviewed by the SEC"],"SEC Rule 17f-2.");
+q("rg","A Form U4 must generally be updated within:","30 days of learning of changes",["24 hours","1 year","5 years"],"Some events require a shorter timeframe.");
+q("rg","Filing misleading information on a Form U4 can result in:","Disciplinary action",["No consequences","A tax credit","Automatic registration"],"Rule 1122.");
+q("rg","Non-registered clerical staff may NOT:","Solicit customers or accept orders",["Answer main phone lines","File documents","Print statements"],"Registered persons only can solicit.");
+q("rg","The Firm Element of continuing education is:","Training designed by the firm based on its needs",["An exam from FINRA","A one-time test","Optional"],"Regulatory Element is FINRA-designed.");
+q("rg","Under MSRB G-37, a municipal dealer making political contributions above de minimis amounts to an issuer official is barred from business with that issuer for:","2 years",["30 days","6 months","10 years"],"Pay-to-play restriction.");
+q("rg","A registered rep must disclose on Form U4:","Felony charges or convictions, bankruptcy and liens",["Hobbies","Favorite stocks","Vacation dates"],"Reportable events.");
+q("rg","FINRA BrokerCheck is:","A free tool for investors to research brokers and firms",["A trading platform","An exchange","A tax service"],"Shows employment history and disclosures.");
+
+// ---------------- app
+const capy=(w=64,m='')=>`<svg class="capy" width="${w}" viewBox="0 0 100 70" role="img" aria-label="capybara"><rect x="22" y="54" width="9" height="12" rx="3" fill="#7d5229"/><rect x="52" y="54" width="9" height="12" rx="3" fill="#7d5229"/><ellipse cx="45" cy="42" rx="33" ry="20" fill="#a77343"/><ellipse cx="80" cy="37" rx="16" ry="14" fill="#a77343"/><rect x="82" y="33" width="15" height="14" rx="6" fill="#8d5f33"/><ellipse cx="94" cy="37" rx="3.5" ry="3" fill="#3a2410"/><ellipse cx="72" cy="25" rx="4" ry="5" fill="#7d5229"/>${m==='happy'?'<path d="M80 31q3-4 6 0" stroke="#2a1a0c" stroke-width="2" fill="none" stroke-linecap="round"/>':'<circle cx="83" cy="30" r="2.2" fill="#2a1a0c"/>'}<circle cx="78" cy="19" r="7" fill="#f6a21e"/><path d="M78 12q2-4 5-3" stroke="#3f8a3a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
+const $=s=>document.querySelector(s),app=$('#app');
+const byId={};Q.forEach(x=>byId[x.id]=x);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const LS={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+let user=LS.get('sie_current',null),db={},sel=new Set(),sess=null;
+const getBrew=()=>LS.get('sie_brew_'+user,0),addBrew=()=>{const n=getBrew()+1;LS.set('sie_brew_'+user,n);return n};
+const rec=id=>db[id]||(db[id]={seen:0,right:0,wrong:0,streak:0,misses:0});
+const save=()=>LS.set('sie_u_'+user,db);
+const isWeak=r=>r&&r.misses>0&&r.streak<CLEAR;
+const mastered=r=>r&&r.seen>0&&(r.misses===0?r.streak>=1:r.streak>=CLEAR);
+function chStats(ch){const qs=Q.filter(x=>x.ch===ch);let m=0,w=0,right=0,wrong=0;
+  qs.forEach(x=>{const r=db[x.id];if(!r)return;if(mastered(r))m++;if(isWeak(r))w++;right+=r.right;wrong+=r.wrong});
+  const n=right+wrong;return{total:qs.length,m,w,acc:n?Math.round(100*right/n):null,n}}
+
+function login(){
+  const users=LS.get('sie_users',[]);
+  app.innerHTML=`<div class="logo">${capy(90)}<h1>Capy SIE Prep</h1></div><div class="card"><h2>Welcome to the pond</h2><p class="mut">Pick a name and settle in. Progress is saved in this browser under that name.</p>
+  <input type="text" id="nm" placeholder="Your name" maxlength="30" autocomplete="off" style="pointer-events:auto;user-select:text">
+  <p><button class="btn" id="go">Continue</button> <button class="btn sec" id="guest">Skip, join as Guest</button></p>
+  ${users.length?`<p class="mut">Or pick a profile:</p>`+users.map(u=>`<button class="btn sec" style="margin:4px 4px 0 0" data-u="${esc(u)}">${esc(u)}</button>`).join(''):''}</div><p class="mut">🌿 Did you know? ${pick(FACTS)}</p>`;
+  const go=n=>{n=n.trim();if(!n)return;const us=LS.get('sie_users',[]);if(!us.includes(n)){us.push(n);LS.set('sie_users',us)}
+    user=n;LS.set('sie_current',n);db=LS.get('sie_u_'+n,{});home()};
+  $('#go').onclick=()=>go($('#nm').value);$('#guest').onclick=()=>go('Guest');setTimeout(()=>$('#nm').focus(),50);$('#nm').onkeydown=e=>e.key==='Enter'&&go(e.target.value);
+  app.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>go(b.dataset.u));
+}
+
+function home(){
+  sess=null;say('Click me for a capybara fact!');
+  const weakIds=Q.filter(x=>isWeak(db[x.id])).map(x=>x.id);
+  const mAll=Q.filter(x=>mastered(db[x.id])).length;
+  app.innerHTML=`<div class="row"><div class="logo">${capy(64)}<h1>Capy SIE Prep</h1></div><span class="mut">${esc(user)} · <a id="sw">switch</a></span></div>
+  <div class="card"><div class="row"><b>Pond progress</b> <span class="streak">· ☕ 7 Brews earned: ${getBrew()}</span> <span class="mut">· Rank: <b>${rank(mAll/Q.length)}</b></span><span class="mut">${mAll} / ${Q.length} questions</span></div>
+  <div class="bar" style="margin:8px 0"><i style="width:${100*mAll/Q.length}%"></i></div>
+  <button class="btn warn" id="weak" ${weakIds.length?'':'disabled'}>Revisit the muddy spots (${weakIds.length})</button>
+  <div class="mut" style="margin-top:6px">Muddy spots = questions you missed. They keep coming back until you get them right ${CLEAR} times in a row, so stay chill and keep paddling.</div></div>
+  ${SECTIONS.map(s=>`<div class="card"><div class="row"><h2>${s.id}. ${s.name} <span class="mut">(${s.wt} of exam)</span></h2><a data-sec="${s.id}" class="mut">select all</a></div>
+  ${s.ch.map(([id,nm])=>{const st=chStats(id);return`<div class="chap"><input type="checkbox" id="c_${id}" data-ch="${id}" ${sel.has(id)?'checked':''}>
+   <label for="c_${id}">${nm}<div class="mut">${st.m}/${st.total} mastered${st.acc!=null?' · '+st.acc+'% accuracy':''}</div></label>
+   ${st.w?`<span class="tag">${st.w} muddy</span>`:(st.acc!=null&&st.acc<70?'<span class="tag">needs a soak</span>':'')}</div>`}).join('')}</div>`).join('')}
+  <div style="position:sticky;bottom:0;padding:10px 0;background:var(--bg)"><button class="btn" id="start" style="width:100%" disabled></button></div>
+  <p class="mut"><a id="reset">Reset my progress</a> · Capybara-approved study aids, original questions and not official FINRA items.</p>`;
+  const upd=()=>{const n=Q.filter(x=>sel.has(x.ch)).length;const b=$('#start');b.disabled=!n;b.textContent=n?`Dive in (${n} questions)`:'Pick chapters to dive in'};
+  app.querySelectorAll('[data-ch]').forEach(c=>c.onchange=()=>{c.checked?sel.add(c.dataset.ch):sel.delete(c.dataset.ch);upd()});
+  app.querySelectorAll('[data-sec]').forEach(a=>a.onclick=()=>{const s=SECTIONS.find(x=>x.id===a.dataset.sec);const all=s.ch.every(c=>sel.has(c[0]));s.ch.forEach(c=>all?sel.delete(c[0]):sel.add(c[0]));home()});
+  $('#start').onclick=()=>start(Q.filter(x=>sel.has(x.ch)).map(x=>x.id));
+  $('#weak').onclick=()=>start(weakIds);
+  $('#sw').onclick=login;
+  $('#reset').onclick=()=>{if(confirm('Erase all progress for '+user+'?')){db={};save();home()}};
+  upd();
+}
+
+function start(ids){sess={queue:shuffle(ids),total:ids.length,first:{},cleared:0,locked:false,streak:0,best:0,wrongRun:0,earned:0};quiz()}
+
+function quiz(){
+  if(!sess.queue.length)return results();
+  const x=byId[sess.queue[0]],r=db[x.id];
+  sess.opts=shuffle([x.c,...x.w]);sess.locked=false;sess.ok=null;
+  const pct=100*sess.cleared/sess.total;
+  app.innerHTML=`<div class="row"><a id="quit">← Back to the pond</a><span class="mut">${sess.queue.length} left · ${sess.cleared}/${sess.total} cleared · <span class="streak">🍊 ${sess.streak}</span> · <span class="streak">☕ ${getBrew()}</span></span></div>
+  <div class="bar" style="margin:10px 0"><i style="width:${pct}%"></i></div>
+  <div class="card"><div class="mut">${esc(CHNAME[x.ch])}${isWeak(r)?` · <span style="color:var(--bad)">missed before: ${CLEAR-r.streak} more correct in a row to clear</span>`:''}</div>
+  <div class="q">${esc(x.t)}</div>
+  ${sess.opts.map((o,i)=>`<button class="opt" data-i="${i}"><b>${i+1}.</b> ${esc(o)}</button>`).join('')}
+  <div id="fb"></div></div>`;
+  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>answer(+b.dataset.i));
+  $('#quit').onclick=()=>{if(confirm('Quit? Progress so far is saved.'))home()};
+}
+
+function answer(i){
+  if(sess.locked)return;sess.locked=true;
+  const id=sess.queue[0],x=byId[id],r=rec(id),ok=sess.opts[i]===x.c;
+  sess.ok=ok;r.seen++;
+  if(ok){r.right++;r.streak++}else{r.wrong++;r.streak=0;r.misses++}
+  if(!(id in sess.first))sess.first[id]=ok;
+  sess.streak=ok?sess.streak+1:0;sess.best=Math.max(sess.best,sess.streak);
+  sess.wrongRun=ok?0:sess.wrongRun+1;
+  let banner='',bm=pick(ok?GOOD:BAD);
+  if(!ok&&sess.wrongRun%3===0){banner='🎬 3 wrong in a row... might be time to watch that vid again, Riya.';bm='Might be time to watch that vid again, Riya!'}
+  else if(ok&&sess.streak%10===5){banner='🔒 You are locked in, Riya! You only need 5 more in a row for a 7 Brew.';bm='Locked in! Only 5 more for a 7 Brew!'}
+  else if(ok&&sess.streak%10===0){const n=addBrew();sess.earned++;banner='☕🎉 10 in a row! You earned a 7 Brew, Riya! Total 7 Brews: '+n;bm='7 BREW EARNED! ☕'}
+  else if(ok&&sess.streak>=3)bm=sess.streak+' in a row! '+bm;
+  sess.banner=banner;
+  say(bm,ok?'happy':'');
+  save();
+  app.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(sess.opts[j]===x.c)b.classList.add('ok');else if(j===i)b.classList.add('no')});
+  $('#fb').innerHTML=`<div class="exp"><b style="color:var(--${ok?'ok':'bad'})">${ok?'Capy-approved!':'Splash! Not quite'}</b>${ok?'':' — answer: '+esc(x.c)}<div>${esc(x.e)}</div>${sess.banner?`<div class="brew">${esc(sess.banner)}</div>`:''}
+  ${ok?'':`<div class="mut" style="margin-top:6px">This one will come back until you get it right ${CLEAR} times in a row.</div>`}</div>
+  <p><button class="btn" id="nx">Next (Enter)</button></p>`;
+  $('#nx').onclick=next;$('#nx').focus();
+}
+
+function next(){
+  if(!sess.locked)return;
+  const id=sess.queue.shift(),r=db[id];
+  const done=sess.ok&&(r.misses===0||r.streak>=CLEAR);
+  if(done)sess.cleared++;
+  else sess.queue.splice(Math.min(sess.ok?4:3,sess.queue.length),0,id);
+  quiz();
+}
+
+function results(){
+  say('Nice soak! Click me for a fact.','happy');
+  const ids=Object.keys(sess.first),right=ids.filter(i=>sess.first[i]).length;
+  const byCh={};ids.forEach(i=>{const c=byId[i].ch;(byCh[c]=byCh[c]||[0,0])[1]++;if(sess.first[i])byCh[c][0]++});
+  const weak=Q.filter(x=>isWeak(db[x.id])).length;
+  app.innerHTML=`<div class="logo">${capy(80)}<h1>Nice soak! Session complete</h1></div><div class="card"><h2>First-try score: ${right}/${ids.length} (${ids.length?Math.round(100*right/ids.length):0}%)</h2>
+  ${Object.entries(byCh).map(([c,[r,t]])=>`<div class="chap"><label>${esc(CHNAME[c])}</label><span class="${r/t<.7?'tag':'mut'}">${r}/${t}${r/t<.7?' · muddy':''}</span></div>`).join('')}
+  <p class="mut">You cleared every question in this session, including the ones you missed. Best streak: 🍊 ${sess.best} · 7 Brews earned this session: ☕ ${sess.earned} (total ${getBrew()})</p><p class="mut">🌿 Did you know? ${pick(FACTS)}</p></div>
+  <button class="btn" id="h">Back to the pond</button> ${weak?`<button class="btn warn" id="w">Revisit remaining muddy spots (${weak})</button>`:''}`;
+  $('#h').onclick=home;
+  if(weak)$('#w').onclick=()=>start(Q.filter(x=>isWeak(db[x.id])).map(x=>x.id));
+}
+
+document.addEventListener('keydown',e=>{
+  if(!sess||!sess.queue.length||e.target.tagName==='INPUT')return;
+  if(!sess.locked&&/^[1-4]$/.test(e.key))answer(+e.key-1);
+  else if(sess.locked&&e.key==='Enter'){e.preventDefault();next()}
+});
+
+const FACTS=["Capybaras are the world's largest rodents.","Capybaras are semi-aquatic and can sleep in water with just their noses above the surface.","A capybara can hold its breath underwater for up to five minutes.","Capybara teeth never stop growing.","Capybaras are very social and often live in groups of 10 to 20.","In Japan, capybaras are famous for relaxing in hot springs with yuzu oranges floating around them.","Capybaras have slightly webbed feet, which makes them great swimmers.","Capybaras can run up to about 35 km/h (22 mph) on land.","Capybaras are native to South America and eat mostly grasses and aquatic plants.","Study tip: capybaras take plenty of breaks. Short breaks help memory too."];
+const GOOD=["Capy-approved!","Smooth as a hot spring.","Yuzu for you!","Big brain energy.","Zen mode: on.","Nailed it, no panic."],BAD=["No worries, mud happens.","Chill. It'll come back around.","Deep breath. Capybaras never panic.","That one's getting another turn, you've got this."];
+const pick=a=>a[Math.random()*a.length|0];
+const rank=p=>p>=1?'Yuzu Master':p>=.8?'Herd Elder':p>=.6?'Hot-Spring Regular':p>=.4?'Mud Lounger':p>=.2?'Pond Paddler':'Little Pup';
+const buddy=document.createElement('div');buddy.id='buddy';document.body.appendChild(buddy);
+let bt;function say(t,m){buddy.innerHTML=`<div class="bub">${esc(t)}</div>${capy(84,m)}`;buddy.classList.remove('hop');void buddy.offsetWidth;if(m==='happy')buddy.classList.add('hop');clearTimeout(bt);bt=setTimeout(()=>{const b=buddy.querySelector('.bub');b&&b.classList.add('off')},4000)}
+buddy.onclick=()=>say(pick(FACTS),'happy');
+['🍊','🌿','💧','🍊','🌿','💧','🍊','🌿'].forEach((e,i)=>{const f=document.createElement('span');f.className='fl';f.textContent=e;f.style.left=(8+i*12)+'%';f.style.animationDuration=(16+i*3)+'s';f.style.animationDelay=(-i*4)+'s';document.body.appendChild(f)});
+
+if(user){db=LS.get('sie_u_'+user,{});home()}else login();
+</script></body></html>
